@@ -3,6 +3,8 @@
 define('utils/Delauney',  [],
 function() {
   var EPSILON = 1.0 / 1048576.0;
+  // Trying lower epsilon: points *not* coincident (in Python)
+  var EPSILON = 0.0000000000000000001;
 
   function supertriangle(vertices) {
     var xmin = Number.POSITIVE_INFINITY,
