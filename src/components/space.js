@@ -55,13 +55,13 @@ define([
 	var x_scale = d3.scale.linear().domain([ranges.x.max, ranges.x.min]).range([20, 0]);
 	var y_scale = d3.scale.linear().domain([ranges.y.max, ranges.y.min]).range([20, 0]);
 	var z_scale = d3.scale.linear().domain([ranges.z.max, ranges.z.min]).range([20,0]);
-	this.meshes = this.meshes.concat(generateAxisAndLabels(this.options.axis_labels.x, newV(10,10,-10),newV(-10,10,-10),newV(0,1,0),x_scale));
-	this.meshes = this.meshes.concat(generateAxisAndLabels(this.options.axis_labels.y, newV(-10,-10,-10),newV(-10,10,-10),newV(-1,0,0),y_scale));
+	this.meshes = this.meshes.concat(generateAxisAndLabels(this.options.axis_labels.x, newV(10,10,10),newV(-10,10,10),newV(0,1,0),x_scale));
+	this.meshes = this.meshes.concat(generateAxisAndLabels(this.options.axis_labels.y, newV(-10,-10,10),newV(-10,10,10),newV(-1,0,0),y_scale));
 	this.meshes = this.meshes.concat(generateAxisAndLabels(this.options.axis_labels.z, newV(10,10,-10),newV(10,10,10),newV(0,1,0),z_scale));
 
 	// generate grids
 	if(this.options.grid){
-	    this.meshes.push(generateGrid([-10,10],[-10,10],[-10,-10],2));//x-y
+	    this.meshes.push(generateGrid([-10,10],[-10,10],[10,10],2));//x-y
 	    this.meshes.push(generateGrid([-10,10],[-10,-10],[-10,10],2));//x-z
 	    this.meshes.push(generateGrid([10,10],[-10,10],[-10,10],2));//y-z
 	}
