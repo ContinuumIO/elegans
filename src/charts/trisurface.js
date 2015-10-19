@@ -35,7 +35,7 @@ define('charts/trisurface',[
         var verty = scales.y(data.y[i]);
         var vertz = scales.z(data.z[i]);
         vertices[i] = [vertx, vertz];
-		colors.push(new THREE.Color(color_scale(scales.y(data.y[i]))));
+		colors.push(new THREE.Color(color_scale(data.y[i])));
 		geometry.vertices.push(new THREE.Vector3(vertx, verty, vertz));
     }
 
