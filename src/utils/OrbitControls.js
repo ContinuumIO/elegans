@@ -611,17 +611,6 @@ define('utils/OrbitControls',[],function(){
 					pan( 0, - scope.keyPanSpeed );
 					scope.update();
 					break;
-
-				case scope.keys.LEFT:
-					pan( scope.keyPanSpeed, 0 );
-					scope.update();
-					break;
-
-				case scope.keys.RIGHT:
-					pan( - scope.keyPanSpeed, 0 );
-					scope.update();
-					break;
-
 			}
 
 		}
