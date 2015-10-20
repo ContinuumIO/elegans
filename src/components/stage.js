@@ -94,7 +94,8 @@ define([
 	this.space = new Space(this.data_ranges, {
 	    axis_labels:this.options.axis_labels,
 	    mode: this.options.space_mode,
-	    grid: this.options.grid
+	    grid: this.options.grid,
+        topdown: this.options.topdown
 	});
 	this.world.addMesh(this.space.getMeshes());
         for(var i=0;i<this.charts.length;i++){
