@@ -2269,17 +2269,6 @@ define('utils/OrbitControls',[],function(){
 					pan( 0, - scope.keyPanSpeed );
 					scope.update();
 					break;
-
-				case scope.keys.LEFT:
-					pan( scope.keyPanSpeed, 0 );
-					scope.update();
-					break;
-
-				case scope.keys.RIGHT:
-					pan( - scope.keyPanSpeed, 0 );
-					scope.update();
-					break;
-
 			}
 
 		}
@@ -2801,6 +2790,7 @@ define('components/world',[
 	    width: 0,
 	    height: 0,
 	    perspective: true,
+        topdown: false,
 	    bg_color: 0xffffff,
         orbit: false,
 	    save_image: false
@@ -2815,7 +2805,7 @@ define('components/world',[
 	if(this.options.perspective)
 	    this.camera = new THREE.PerspectiveCamera(45, this.options.width/this.options.height, 1, 1000);
 	else
-	    this.camera = new THREE.OrthographicCamera(-20,20,-20,20);
+	    this.camera = new THREE.OrthographicCamera(-20,20,20,-20);
 
 	this.scene.add(this.camera);
 
@@ -2837,18 +2827,26 @@ define('components/world',[
 	
 	this.renderer.sortObjects = false;
 
-	if(this.options.perspective && this.options.orbit)
+    if (this.options.topdown)
+        this.options.orbit = true;
+
+	if(this.options.orbit)
 	    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     else if (this.options.perspective)
         this.controls = new TrackballControls(this.camera, this.renderer.domElement);
-	else
-	    this.controls = new OrthographicTrackballControls(this.camera, this.renderer.domElement);
+	else {
+	    this.controls = new OrthographicTrackballControls(this.camera, this.renderer.domElement);}
 
 	this.controls.screen = {left: 0, top: 0, width: this.options.width, height: this.options.height};
 	this.controls.rotateSpeed = 0.5;
 
-	this.camera.position.set(-30, 31,42);
-	this.camera.rotation.set(-0.6,-0.5,0.6);
+    if (this.options.topdown){
+        this.camera.position.set( 0, 50, 0);
+        this.controls.noRotate = true;
+     }
+    else {
+    	this.camera.position.set(-30, 31,42);
+	    this.camera.rotation.set(-0.6,-0.5,0.6);}
 
 	return this;
     }
@@ -2902,7 +2900,8 @@ define('components/space',[
 	this.options = {
 	    axis_labels: {x:"X", y:"Y", z:"Z"},
 	    mode: 'wireframe',
-	    grid: true
+	    grid: true,
+        topdown: false
 	};
 
 	if(arguments.length > 1){
@@ -2953,7 +2952,11 @@ define('components/space',[
 	var y_scale = d3.scale.linear().domain([ranges.y.max, ranges.y.min]).range([20, 0]);
 	var z_scale = d3.scale.linear().domain([ranges.z.max, ranges.z.min]).range([20,0]);
 	this.meshes = this.meshes.concat(generateAxisAndLabels(this.options.axis_labels.x, newV(10,10,10),newV(-10,10,10),newV(0,1,0),x_scale));
-	this.meshes = this.meshes.concat(generateAxisAndLabels(this.options.axis_labels.y, newV(-10,-10,10),newV(-10,10,10),newV(-1,0,0),y_scale));
+
+
+    if (this.options.topdown==false){
+     	this.meshes = this.meshes.concat(generateAxisAndLabels(this.options.axis_labels.y, newV(-10,-10,10),newV(-10,10,10),newV(-1,0,0),y_scale));}
+
 	this.meshes = this.meshes.concat(generateAxisAndLabels(this.options.axis_labels.z, newV(10,10,-10),newV(10,10,10),newV(0,1,0),z_scale));
 
 	// generate grids
@@ -3351,6 +3354,7 @@ define('components/stage',[
 	    grid: true,
 	    perspective: true,
 	    orbit: false,
+        topdown: false,
 	    save_image: false
 	};
 
@@ -3395,6 +3399,7 @@ define('components/stage',[
 	    height:this.options.world_height,
 	    bg_color:this.options.bg_color,
 	    perspective: this.options.perspective,
+        topdown: this.options.topdown,
         orbit: this.options.orbit
 	});
 
@@ -3422,7 +3427,8 @@ define('components/stage',[
 	this.space = new Space(this.data_ranges, {
 	    axis_labels:this.options.axis_labels,
 	    mode: this.options.space_mode,
-	    grid: this.options.grid
+	    grid: this.options.grid,
+        topdown: this.options.topdown
 	});
 	this.world.addMesh(this.space.getMeshes());
         for(var i=0;i<this.charts.length;i++){
