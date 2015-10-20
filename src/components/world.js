@@ -10,6 +10,7 @@ define([
 	    width: 0,
 	    height: 0,
 	    perspective: true,
+        topdown: false,
 	    bg_color: 0xffffff,
         orbit: false,
 	    save_image: false
@@ -46,18 +47,26 @@ define([
 	
 	this.renderer.sortObjects = false;
 
-	if(this.options.perspective && this.options.orbit)
+    if (this.options.topdown)
+        this.options.orbit = true;
+
+	if(this.options.orbit)
 	    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     else if (this.options.perspective)
         this.controls = new TrackballControls(this.camera, this.renderer.domElement);
-	else
-	    this.controls = new OrthographicTrackballControls(this.camera, this.renderer.domElement);
+	else {
+	    this.controls = new OrthographicTrackballControls(this.camera, this.renderer.domElement);}
 
 	this.controls.screen = {left: 0, top: 0, width: this.options.width, height: this.options.height};
 	this.controls.rotateSpeed = 0.5;
 
-	this.camera.position.set(-30, 31,42);
-	this.camera.rotation.set(-0.6,-0.5,0.6);
+    if (this.options.topdown){
+        this.camera.position.set( 0, 50, 0);
+        this.controls.noRotate = true;
+     }
+    else {
+    	this.camera.position.set(-30, 31,42);
+	    this.camera.rotation.set(-0.6,-0.5,0.6);}
 
 	return this;
     }

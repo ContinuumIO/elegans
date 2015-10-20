@@ -21,6 +21,7 @@ define([
 	    grid: true,
 	    perspective: true,
 	    orbit: false,
+        topdown: false,
 	    save_image: false
 	};
 
@@ -65,6 +66,7 @@ define([
 	    height:this.options.world_height,
 	    bg_color:this.options.bg_color,
 	    perspective: this.options.perspective,
+        topdown: this.options.topdown,
         orbit: this.options.orbit
 	});
 
