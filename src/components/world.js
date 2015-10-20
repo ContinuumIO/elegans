@@ -24,7 +24,7 @@ define([
 	if(this.options.perspective)
 	    this.camera = new THREE.PerspectiveCamera(45, this.options.width/this.options.height, 1, 1000);
 	else
-	    this.camera = new THREE.OrthographicCamera(-20,20,-20,20);
+	    this.camera = new THREE.OrthographicCamera(-20,20,20,-20);
 
 	this.scene.add(this.camera);
 
