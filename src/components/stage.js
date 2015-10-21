@@ -21,6 +21,7 @@ define([
 	    grid: true,
 	    perspective: true,
 	    orbit: false,
+        orbit_target: [0, 0, 0], // Note: World extents (-10 to 10)
         topdown: false,
 	    save_image: false
 	};
@@ -67,7 +68,8 @@ define([
 	    bg_color:this.options.bg_color,
 	    perspective: this.options.perspective,
         topdown: this.options.topdown,
-        orbit: this.options.orbit
+        orbit: this.options.orbit,
+        orbit_target: this.options.orbit_target
 	});
 
 	this.data_ranges = {

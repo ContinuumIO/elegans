@@ -13,6 +13,7 @@ define([
         topdown: false,
 	    bg_color: 0xffffff,
         orbit: false,
+        orbit_target: [0, 0, 0],
 	    save_image: false
 	};
 
@@ -50,8 +51,10 @@ define([
     if (this.options.topdown)
         this.options.orbit = true;
 
-	if(this.options.orbit)
+	if(this.options.orbit) {
 	    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls.center.fromArray(this.options.orbit_target);
+}
     else if (this.options.perspective)
         this.controls = new TrackballControls(this.camera, this.renderer.domElement);
 	else {
