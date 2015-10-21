@@ -2833,7 +2833,8 @@ define('components/world',[
 
 	if(this.options.orbit) {
 	    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        this.controls.center.fromArray(this.options.orbit_target);
+        if (!this.options.topdown) {
+        this.controls.center.fromArray(this.options.orbit_target);}
 }
     else if (this.options.perspective)
         this.controls = new TrackballControls(this.camera, this.renderer.domElement);
